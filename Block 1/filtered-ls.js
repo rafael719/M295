@@ -15,3 +15,5 @@ fs.readdir(dirPath, function (err, list) {
     }
   });
 });
+
+learnyounode.verify(juggling-async.js);
