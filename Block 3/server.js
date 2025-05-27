@@ -32,7 +32,7 @@ app.get('/temperature/:plz', async (request, response) => {
     
     response.json({
       plz: plz,
-      temperature: data.currentWeather.temperature,
+      temperature: data.temperature,
       timestamp: new Date().toISOString()
     });
     
