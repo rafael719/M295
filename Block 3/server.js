@@ -10,6 +10,37 @@ app.get('/', (request, response) => {
   response.send('Hello World!');
 });
 
+// New endpoint for temperature data
+app.get('/temperature/:plz', async (request, response) => {
+  try {
+    const plz = request.params.plz;
+    // Format PLZ for API (append '00')
+    const formattedPlz = plz + '00';
+    const url = `https://app-prod-ws.meteoswiss-app.ch/v1/plzDetail?plz=${formattedPlz}`;
+
+    console.log(`Fetching temperature for PLZ: ${plz}`);
+    const apiResponse = await fetch(url);
+    
+    if (!apiResponse.ok) {
+      throw new Error(`API returned status: ${apiResponse.status}`);
+    }
+    
+    const data = await apiResponse.json();
+    response.json({
+      plz: plz,
+      temperature: data.currentWeather.temperature,
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    console.error('Error fetching temperature:', error);
+    response.status(500).json({
+      error: 'Failed to fetch temperature data',
+      message: error.message
+    });
+  }
+});
+
 // Add error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
