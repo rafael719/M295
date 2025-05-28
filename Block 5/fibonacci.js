@@ -11,4 +11,4 @@ while (a <= 4000000) {
   b = next;
 }
 
-console.log("Sum of even-valued Fibonacci numbers under 4 million:", sum);
+console.log("Summe der Zahlen ist:", sum);
